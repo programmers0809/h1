@@ -1,0 +1,159 @@
+{% extends "news/base.html" %} 
+
+{% block category %}
+<section id="navArea">
+  <nav class="navbar navbar-inverse" role="navigation">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar"> 
+        <span class="sr-only">Toggle navigation</span> 
+        <span class="icon-bar"></span> 
+        <span class="icon-bar"></span> 
+        <span class="icon-bar"></span> 
+      </button>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav main_nav">
+        <li class="active"><a href="index.html"><span class="fa fa-home desktop-home"></span><span class="mobile-show">Home</span></a></li>
+        {% for category in category_list %}
+        <li><a href="#">{{ category.name }}</a></li>
+        {% endfor %}
+      </ul>
+    </div>
+  </nav>
+</section>
+{% endblock category %}
+
+{% load static %}
+
+{% block content %}
+<section id="sliderSection">
+  <div class="row">
+    <div class="col-lg-8 col-md-8 col-sm-8">
+      <div class="slick_slider">
+        {% for news in all_news_list %}
+        <div class="single_iteam"> 
+
+          <a href="pages/single_page.html"> 
+            <img src="{{ uzb_news.image.url }}" alt="">
+          </a>
+          <div class="slider_article">
+            <h2><a class="slider_tittle" href="pages/single_page.html">{{uzb_news.body| truncatewords:15}}</a></h2>
+            <p>{{uzb_news.body| truncatewords:9}}</p>
+          </div>
+        </div>
+        {% endfor %}
+        <!-- Repeat similar blocks for other slider items -->
+      </div>
+    </div>
+    <div class="col-lg-4 col-md-4 col-sm-4">
+      <div class="latest_post">
+        <h2><span>So'ngi yanglik</span></h2>
+        <div class="latest_post_container">
+          <div id="prev-button"><i class="fa fa-chevron-up"></i></div>
+          <ul class="latest_postnav">
+            {% for news in all_news_list %}
+            <div class="media">
+              <a href="pages/single_page.html" class="media-left">
+                <img alt="" src="{{ news.image.url }}">
+              </a>
+              <div class="media-body">
+                <a href="pages/single_page.html" class="catg_title">{{ news.title }}</a>
+              </div>
+            </div>
+            {% endfor %}
+          </ul>
+          <div id="next-button"><i class="fa fa-chevron-down"></i></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="contentSection">
+  <div class="row">
+    <div class="col-lg-8 col-md-8 col-sm-8">
+      <div class="left_content">
+        <div class="single_post_content">
+          <h2><span>O'zbekston</span></h2>
+          <div class="single_post_content_left">
+            <ul class="business_catgnav wow fadeInDown">
+              {% for uzb_news in uzb_news_list %}
+              {% if forloop.first  %}
+              <li>
+                <figure class="bsbig_fig"> 
+                  <a href="pages/single_page.html" class="featured_img"> 
+                    <img alt="" src="{{ uzb_news.image.url }}"> 
+                    <span class="overlay"></span> 
+                  </a>
+                  <figcaption> 
+                    <a href="single_page.html">{{uzb_news.title | truncatewords:3}}</a> 
+                  </figcaption>
+                  <p>{{uzb_news.body| truncatewords:15}}</p>
+                </figure>
+              </li>
+              {% endif %}
+              {% endfor %}
+            </ul>
+          </div>
+          <div class="single_post_content_right">
+            <ul class="spost_nav">
+
+              {% for uzb_news in uzb_news_list %}
+              {% if forloop.counter > 1 %}
+              <li>
+                <div class="media wow fadeInDown"> 
+                  <a href="pages/single_page.html" class="media-left"> 
+                    <img alt="" src="{{ uzb_news.image.url }}"> 
+                  </a>
+                  <div class="media-body"> 
+                    <a href="pages/single_page.html" class="catg_title"> Aliquam malesuada diam eget turpis varius 1</a> 
+                  </div>
+                </div>
+              </li>
+              {% endif %}
+              {% endfor %}
+              <!-- Repeat similar blocks for other items -->
+            </ul>
+          </div>
+        </div>
+        <!-- Repeat similar blocks for other sections -->
+      </div>
+    </div>
+    <div class="col-lg-4 col-md-4 col-sm-4">
+      <aside class="right_content">
+        <div class="single_sidebar">
+          <h2><span>Popular Post</span></h2>
+          <ul class="spost_nav">
+            <li>
+              <div class="media wow fadeInDown"> 
+                <a href="pages/single_page.html" class="media-left"> 
+                  <img alt="" src="{% static 'images/post_img1.jpg' %}"> 
+                </a>
+                <div class="media-body"> 
+                  <a href="pages/single_page.html" class="catg_title"> Aliquam malesuada diam eget turpis varius 1</a> 
+                </div>
+              </div>
+            </li>
+            <!-- Repeat similar blocks for other items -->
+          </ul>
+        </div>
+        <div class="single_sidebar">
+          <ul class="nav nav-tabs" role="tablist">
+            <li role="presentation" class="active"><a href="#category" aria-controls="home" role="tab" data-toggle="tab">Category</a></li>
+          </ul>
+          <div class="tab-content">
+            <div role="tabpanel" class="tab-pane active" id="category">
+              <ul>
+                {% for category in category_list %}
+                <li class="cat-item"><a href="#">{{ category.name }}</a></li>
+                {% endfor %}
+              </ul>
+            </div>
+          </div>
+        </div>
+      </aside>
+    </div>
+  </div>
+</section>
+
+{% endblock content %}
